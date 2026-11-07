@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Svasthya | Search Patient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+    :root{
+      --ink:#14302d;
+      --ink-soft:#3c5f5a;
+      --paper:#eef3ef;
+      --card:#ffffff;
+      --accent:#0b7a6e;
+      --accent-deep:#075851;
+      --accent-tint:#e2f2ef;
+      --gold:#9c6f1f;
+      --gold-tint:#faf1de;
+      --coral:#b23a26;
+      --coral-tint:#fbe9e5;
+      --line:#dbe6e1;
+      --muted:#5f7975;
+      --shadow: 0 1px 2px rgba(20,48,45,.04), 0 8px 24px rgba(20,48,45,.05);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Inter',Arial,sans-serif;
+      background:var(--paper);
+      color:var(--ink);
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;}
+    .num{font-family:'IBM Plex Mono',monospace;}
+
+    /* ============= TOP BAR ============= */
+    .topbar{
+      background:var(--ink);
+      padding:0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky; top:0; z-index:50;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:16px 0;
+      color:#fff;
+    }
+    .brand-mark{
+      width:34px;height:34px;border-radius:8px;
+      background:var(--accent);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Newsreader',serif; font-weight:600; font-size:18px;
+      flex-shrink:0;
+    }
+    .brand-text h1{font-family:'Newsreader',serif; font-size:19px; font-weight:600; line-height:1;}
+    .brand-text p{font-size:10.5px; letter-spacing:.06em; color:#9fc2bd; margin-top:3px; text-transform:uppercase;}
+
+    /* Folder-tab navigation */
+    .tabs{ display:flex; align-items:flex-end; gap:4px; align-self:stretch; }
+    .tab{
+      display:flex; align-items:center; gap:7px;
+      padding:12px 18px 11px;
+      color:#adc9c4;
+      text-decoration:none;
+      font-size:13.5px;
+      font-weight:500;
+      border-radius:10px 10px 0 0;
+      position:relative;
+      top:1px;
+      transition:.2s ease;
+      background:transparent;
+    }
+    .tab:hover{ color:#fff; background:rgba(255,255,255,.06); }
+    .tab.active{
+      background:var(--paper);
+      color:var(--ink);
+      box-shadow: 0 -6px 14px rgba(0,0,0,.08);
+    }
+    .tab .ic{font-size:14px;}
+
+    .topbar-right{ display:flex; align-items:center; gap:16px; padding:14px 0; }
+    .icon-btn{
+      width:36px;height:36px;border-radius:9px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      display:flex;align-items:center;justify-content:center;
+      color:#dcece9; cursor:pointer; font-size:14px;
+      position:relative;
+    }
+    .icon-btn .dot{
+      position:absolute; top:-4px; right:-4px;
+      width:15px;height:15px;border-radius:50%;
+      background:var(--coral); color:#fff;
+      font-size:9px; display:flex;align-items:center;justify-content:center;
+      border:2px solid var(--ink);
+    }
+    .profile-chip{
+      display:flex; align-items:center; gap:9px;
+      padding:5px 12px 5px 5px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:30px;
+      cursor:pointer;
+    }
+    .profile-avatar{
+      width:28px;height:28px;border-radius:50%;
+      background:var(--accent); color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px; font-weight:700;
+    }
+    .profile-chip span{ color:#eaf5f2; font-size:12.5px; font-weight:600; }
+
+    /* ============= MAIN ============= */
+    main{ max-width:1360px; margin:0 auto; padding:36px 28px 60px; }
+
+    .page-head{
+      display:flex; justify-content:space-between; align-items:flex-end;
+      margin-bottom:28px; flex-wrap:wrap; gap:12px;
+    }
+    .eyebrow{
+      color:var(--accent-deep); font-size:11.5px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;
+    }
+    .page-head h2{ font-family:'Newsreader',serif; font-size:32px; font-weight:600; color:var(--ink); }
+    .page-head .sub{ color:var(--muted); font-size:14px; margin-top:6px; max-width:520px; }
+    .today{ color:var(--muted); font-size:12.5px; text-align:right; }
+    .today strong{ display:block; color:var(--ink); font-size:13.5px; margin-bottom:2px; }
+
+    /* ============= STAT CARDS ============= */
+    .stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:26px; }
+    .stat-row.cols-3{ grid-template-columns:repeat(3,1fr); }
+    .stat{
+      background:var(--card); border:1px solid var(--line); border-radius:14px;
+      padding:20px 22px; box-shadow:var(--shadow);
+    }
+    .stat p{ color:var(--muted); font-size:12.5px; margin-bottom:10px; }
+    .stat h3{ font-family:'IBM Plex Mono',monospace; font-size:28px; color:var(--ink); font-weight:600; }
+    .stat .trend{ font-size:11.5px; margin-top:8px; font-weight:600; }
+    .trend.up{ color:var(--accent-deep); }
+    .trend.warn{ color:var(--gold); }
+    .trend.down{ color:var(--coral); }
+
+    /* ============= CARD / PANEL ============= */
+    .panel{
+      background:var(--card); border:1px solid var(--line); border-radius:14px;
+      padding:26px; box-shadow:var(--shadow); margin-bottom:20px;
+    }
+    .panel-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap:12px; flex-wrap:wrap;}
+    .panel-head h3{ font-family:'Newsreader',serif; font-size:19px; font-weight:600; }
+    .panel-head p{ color:var(--muted); font-size:12.5px; margin-top:3px; }
+
+    .grid-2{ display:grid; grid-template-columns:1.55fr 1fr; gap:20px; align-items:start; }
+
+    /* ============= BUTTONS ============= */
+    .btn{
+      border:none; cursor:pointer; font-family:inherit; font-size:13px; font-weight:600;
+      padding:10px 16px; border-radius:8px; display:inline-flex; align-items:center; gap:7px;
+      transition:.15s ease;
+    }
+    .btn-primary{ background:var(--accent); color:#fff; }
+    .btn-primary:hover{ background:var(--accent-deep); }
+    .btn-ghost{ background:var(--accent-tint); color:var(--accent-deep); }
+    .btn-ghost:hover{ background:#d3ebe6; }
+    .btn-line{ background:transparent; border:1px solid var(--line); color:var(--ink-soft); }
+    .btn-line:hover{ border-color:var(--accent); color:var(--accent-deep); }
+
+    /* ============= SEARCH / FILTER ============= */
+    .toolbar{ display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .toolbar input[type=text], .toolbar input[type=date], .toolbar select{
+      padding:11px 13px; border:1px solid var(--line); border-radius:8px;
+      font-family:inherit; font-size:13.5px; background:#fbfdfc; color:var(--ink);
+      outline:none;
+    }
+    .toolbar input[type=text]{ flex:1; min-width:220px; }
+    .toolbar select{ min-width:160px; }
+    .toolbar input:focus, .toolbar select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint); }
+
+    /* ============= TABLE ============= */
+    .table-wrap{ overflow-x:auto; }
+    table{ width:100%; border-collapse:collapse; }
+    th{
+      text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em;
+      color:var(--muted); font-weight:600; padding:10px 12px; border-bottom:1px solid var(--line);
+    }
+    td{ padding:14px 12px; border-bottom:1px solid #eef3f1; font-size:13.5px; vertical-align:middle; }
+    tr:last-child td{ border-bottom:none; }
+    td strong{ color:var(--ink); font-weight:600; }
+    td small{ color:var(--muted); font-family:'IBM Plex Mono',monospace; font-size:11.5px; }
+    tbody tr:hover{ background:#f9fbfa; }
+
+    .pill{ display:inline-block; padding:4px 11px; border-radius:20px; font-size:11.5px; font-weight:600; }
+    .pill.good{ background:var(--accent-tint); color:var(--accent-deep); }
+    .pill.warn{ background:var(--gold-tint); color:var(--gold); }
+    .pill.bad{ background:var(--coral-tint); color:var(--coral); }
+    .pill.info{ background:#e6eef8; color:#3a5b8a; }
+
+    .row-btn{
+      background:var(--accent-tint); color:var(--accent-deep); border:none;
+      padding:7px 13px; border-radius:6px; font-size:12.5px; font-weight:600; cursor:pointer;
+    }
+    .row-btn:hover{ background:var(--accent); color:#fff; }
+
+    /* ============= PROGRESS ============= */
+    .progress-row{ margin-bottom:18px; }
+    .progress-row:last-child{ margin-bottom:0; }
+    .progress-info{ display:flex; justify-content:space-between; font-size:13px; margin-bottom:7px; }
+    .progress-info span{ color:var(--muted); }
+    .progress-info strong{ font-family:'IBM Plex Mono',monospace; }
+    .bar-bg{ height:7px; background:#e7f0ed; border-radius:10px; overflow:hidden; }
+    .bar-fill{ height:100%; background:var(--accent); border-radius:10px; }
+
+    /* ============= BAR CHART ============= */
+    .chart{ height:210px; display:flex; align-items:flex-end; gap:16px; border-bottom:1px solid var(--line); padding:10px 6px 0; }
+    .chart-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:8px; }
+    .chart-bar{ width:60%; max-width:34px; background:#bfe0da; border-radius:5px 5px 0 0; transition:.2s; }
+    .chart-col.now .chart-bar{ background:var(--accent); }
+    .chart-col span{ font-size:11px; color:var(--muted); }
+
+    /* ============= QUICK ACTIONS ============= */
+    .action-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .action-card{
+      display:flex; flex-direction:column; gap:8px; padding:16px;
+      background:#f8faf9; border:1px solid var(--line); border-radius:10px;
+      text-decoration:none; color:var(--ink); transition:.15s ease;
+    }
+    .action-card:hover{ border-color:var(--accent); transform:translateY(-2px); background:var(--accent-tint); }
+    .action-card .ic{ font-size:18px; }
+    .action-card strong{ font-size:13px; }
+    .action-card small{ color:var(--muted); font-size:11.5px; }
+
+    /* ============= ALERTS ============= */
+    .alert{ display:flex; gap:12px; align-items:flex-start; padding:13px; border-radius:10px; margin-bottom:10px; }
+    .alert:last-child{ margin-bottom:0; }
+    .alert-bad{ background:var(--coral-tint); }
+    .alert-warn{ background:var(--gold-tint); }
+    .alert-info{ background:#e6eef8; }
+    .alert .ic{
+      width:26px;height:26px;border-radius:50%;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center; font-size:12px; font-weight:700;
+    }
+    .alert-bad .ic{ background:#f0c7bd; color:var(--coral); }
+    .alert-warn .ic{ background:#f0dfb3; color:var(--gold); }
+    .alert-info .ic{ background:#c9dcf0; color:#3a5b8a; }
+    .alert strong{ font-size:13px; display:block; }
+    .alert p{ font-size:12px; color:var(--muted); margin-top:2px; }
+
+    /* ============= FOOTER ============= */
+    .foot{ margin-top:34px; padding-top:18px; border-top:1px solid var(--line); display:flex; justify-content:space-between; color:var(--muted); font-size:11.5px; flex-wrap:wrap; gap:8px; }
+
+    /* ============= RESPONSIVE ============= */
+    @media (max-width:1080px){
+      .stat-row, .stat-row.cols-3{ grid-template-columns:repeat(2,1fr); }
+      .grid-2{ grid-template-columns:1fr; }
+      .tabs .tab span.label{ display:none; }
+    }
+    @media (max-width:640px){
+      .stat-row, .stat-row.cols-3{ grid-template-columns:1fr; }
+      .action-grid{ grid-template-columns:1fr; }
+      .topbar{ flex-wrap:wrap; padding:10px 16px; }
+      .tabs{ order:3; width:100%; overflow-x:auto; }
+      main{ padding:24px 16px 40px; }
+    }
+
+    /* ============= MODAL / DIALOG ============= */
+    dialog.modal{
+      border:none; border-radius:16px; padding:0;
+      width:100%; max-width:560px;
+      box-shadow:0 24px 60px rgba(20,48,45,.25);
+      background:var(--card);
+      color:var(--ink);
+    }
+    dialog.modal.modal-wide{ max-width:760px; }
+    dialog.modal::backdrop{ background:rgba(15,32,30,.45); backdrop-filter: blur(1px); }
+    dialog.modal[open]{ animation: modal-in .18s ease; }
+    @keyframes modal-in{
+      from{ opacity:0; transform:translateY(8px) scale(.98); }
+      to{ opacity:1; transform:translateY(0) scale(1); }
+    }
+    .modal-head{
+      display:flex; justify-content:space-between; align-items:flex-start;
+      padding:22px 26px; border-bottom:1px solid var(--line);
+    }
+    .modal-head h3{ font-family:'Newsreader',serif; font-size:19px; font-weight:600; }
+    .modal-head p{ color:var(--muted); font-size:12.5px; margin-top:4px; }
+    .modal-close{
+      width:30px;height:30px;border-radius:8px;border:none;
+      background:#f0f4f2; color:var(--muted); cursor:pointer; font-size:15px;
+      display:flex;align-items:center;justify-content:center; flex-shrink:0;
+    }
+    .modal-close:hover{ background:var(--coral-tint); color:var(--coral); }
+    .modal-body{ padding:22px 26px; max-height:65vh; overflow-y:auto; }
+    .modal-foot{
+      display:flex; justify-content:flex-end; gap:10px;
+      padding:18px 26px; border-top:1px solid var(--line);
+    }
+    .modal-field{ margin-bottom:16px; }
+    .modal-field:last-child{ margin-bottom:0; }
+    .modal-field label{ display:block; font-weight:600; font-size:13px; margin-bottom:7px; color:var(--ink-soft); }
+    .modal-field input, .modal-field select, .modal-field textarea{
+      width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:8px;
+      font-family:inherit; font-size:13.5px; background:#fbfdfc; color:var(--ink); outline:none;
+    }
+    .modal-field textarea{ min-height:80px; resize:vertical; }
+    .modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus{
+      border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint);
+    }
+    .modal-row-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .view-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; }
+    .view-item{ padding:12px 0; border-bottom:1px solid #eef3f1; }
+    .view-item span{ display:block; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px; }
+    .view-item strong{ font-size:14px; color:var(--ink); }
+    @media (max-width:560px){
+      .modal-row-2, .view-grid{ grid-template-columns:1fr; }
+    }
+
+
+      .form-row-2{ display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:16px; }
+      .form-field{ margin-bottom:16px; }
+      .form-field label, .form-row-2 label{ display:block; font-weight:600; font-size:13.5px; margin-bottom:7px; color:var(--ink-soft); }
+      .form-field input, .form-field select, .form-field textarea,
+      .form-row-2 input, .form-row-2 select{
+        width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;
+        font-family:inherit; font-size:13.5px; background:#fbfdfc; color:var(--ink); outline:none;
+      }
+      .form-field textarea{ min-height:90px; resize:vertical; }
+      .form-field input:focus, .form-field select:focus, .form-row-2 input:focus, .form-row-2 select:focus{
+        border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint);
+      }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <h1>Svasthya</h1>
+        <p>Registration Portal</p>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <a href="registration.html" class="tab"><span class="ic">🏠</span><span class="label">Dashboard</span></a>
+      <a href="registration-register.html" class="tab"><span class="ic">👤</span><span class="label">Register Patient</span></a>
+      <a href="registration-search.html" class="tab active"><span class="ic">🔍</span><span class="label">Search Patient</span></a>
+      <a href="registration-records.html" class="tab"><span class="ic">📋</span><span class="label">Patient Records</span></a>
+      <a href="registration-appointments.html" class="tab"><span class="ic">📅</span><span class="label">Appointments</span></a>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="icon-btn">🔔<span class="dot">3</span></div>
+      <div class="profile-chip">
+        <div class="profile-avatar">RS</div>
+        <span>Front Desk</span>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">REGISTRATION STAFF</p>
+        <h2>Search Patient</h2>
+        <p class="sub">Look up an existing record before starting a new visit.</p>
+      </div>
+      <div class="today">
+        <strong>Sunday, 30 Aug 2026</strong>
+        Community Health Center · Adalaj
+      </div>
+    </div>
+
+
+    <section class="panel">
+      <div class="panel-head"><h3>Search Patient</h3><p>Find an existing record by ID, name or phone number</p></div>
+      <div class="toolbar">
+        <input type="text" placeholder="Search by patient ID, name or phone number...">
+        <button class="btn btn-primary">Search</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h3>Results</h3><p>3 patients matched</p></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Patient ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Contact</th><th>Last Visit</th><th></th></tr></thead>
+          <tbody>
+            <tr><td data-label="Patient ID" class="num">CHC-0417</td><td data-label="Name"><strong>Riya Sharma</strong></td><td data-label="Age">24</td><td data-label="Gender">Female</td><td data-label="Contact" class="num">9876543210</td><td data-label="Last Visit">20 Aug 2026</td><td><button class="row-btn" onclick="viewRow(this)">Open Record</button></td></tr>
+            <tr><td data-label="Patient ID" class="num">CHC-0416</td><td data-label="Name"><strong>Arjun Patel</strong></td><td data-label="Age">32</td><td data-label="Gender">Male</td><td data-label="Contact" class="num">9876501234</td><td data-label="Last Visit">20 Aug 2026</td><td><button class="row-btn" onclick="viewRow(this)">Open Record</button></td></tr>
+            <tr><td data-label="Patient ID" class="num">CHC-0415</td><td data-label="Name"><strong>Meera Shah</strong></td><td data-label="Age">45</td><td data-label="Gender">Female</td><td data-label="Contact" class="num">9876549876</td><td data-label="Last Visit">19 Aug 2026</td><td><button class="row-btn" onclick="viewRow(this)">Open Record</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <div class="foot">
+      <span>© 2026 Svasthya — Integrated Health Management System</span>
+      <span>Registration → Doctor → Lab → Pharmacy → Admin</span>
+    </div>
+  </main>
+
+  
+  <!-- Generic "View" modal: filled by JS from the clicked table row -->
+  <dialog id="viewModal" class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 id="viewModalTitle">Record Details</h3>
+        <p>Read-only preview — will pull live data once connected to a database</p>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('viewModal').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="view-grid" id="viewModalBody"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-line" onclick="document.getElementById('viewModal').close()">Close</button>
+    </div>
+  </dialog>
+
+  
+
+  <script>
+  
+    function openModal(id){
+      const d = document.getElementById(id);
+      if(d) d.showModal();
+    }
+    function closeModal(id){
+      const d = document.getElementById(id);
+      if(d) d.close();
+    }
+    // Populates the shared "View" modal from the row that was clicked.
+    // Reads each <td>'s data-label + text so it works for any table
+    // without extra wiring per page.
+    function viewRow(btn, titleField){
+      const row = btn.closest('tr');
+      if(!row) return;
+      const cells = row.querySelectorAll('td');
+      let html = '';
+      let title = 'Record Details';
+      cells.forEach((cell, i) => {
+        const label = cell.getAttribute('data-label');
+        if(!label) return; // skip the action column (no data-label)
+        const value = cell.innerText.trim().replace(/\n+/g,' · ');
+        if(i === 0) title = value.split(' · ')[0] || title;
+        html += `<div class="view-item"><span>${label}</span><strong>${value}</strong></div>`;
+      });
+      document.getElementById('viewModalTitle').innerText = titleField || title;
+      document.getElementById('viewModalBody').innerHTML = html;
+      openModal('viewModal');
+    }
+    // Backdrop click closes any open dialog
+    document.addEventListener('click', function(e){
+      document.querySelectorAll('dialog[open]').forEach(function(d){
+        const r = d.getBoundingClientRect();
+        const inside = r.top <= e.clientY && e.clientY <= r.top + r.height &&
+                       r.left <= e.clientX && e.clientX <= r.left + r.width;
+        if(!inside) d.close();
+      });
+    });
+
+  </script>
+
+</body>
+</html>

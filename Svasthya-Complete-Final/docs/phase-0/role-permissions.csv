@@ -1,0 +1,13 @@
+Capability,Registration,Doctor,Laboratory,Pharmacy,Administrator
+View patient demographics,yes,yes,lab-order-related only,prescription-related only,yes
+Create or edit patient demographics,yes,no,no,no,yes
+Create or update appointments and queue,yes,assigned appointments,no,no,yes
+Record or complete consultations,no,yes,no,no,yes
+Create lab orders,no,yes,no,no,yes
+Record lab results,no,read only,yes,no,yes
+Create prescriptions,no,yes,no,no,yes
+Dispense prescription items,no,read only,no,yes,yes
+Manage medicine inventory,no,no,no,yes,yes
+Manage staff accounts,no,no,no,no,yes
+View operational reports,no,no,no,no,yes
+Export identifiable patient data,no,no,no,no,restricted and audited

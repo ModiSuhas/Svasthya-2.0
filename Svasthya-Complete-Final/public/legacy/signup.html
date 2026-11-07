@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Svasthya | Staff Registration</title>
+
+    <link rel="stylesheet" href="signup.css">
+
+</head>
+
+
+<body>
+
+    <main class="signup-page">
+
+        <div class="signup-container">
+
+
+            <!-- ================= LEFT SIDE ================= -->
+
+            <section class="signup-info">
+
+                <div class="brand">
+
+                    <h1>Svasthya</h1>
+
+                    <p>
+                        Integrated Health Management System
+                    </p>
+
+                </div>
+
+
+                <div class="info-content">
+
+                    <p class="label">
+                        STAFF REGISTRATION
+                    </p>
+
+                    <h2>
+                        Join the
+                        <span>Svasthya</span>
+                        healthcare network.
+                    </h2>
+
+                    <p>
+                        Create your staff account to access the
+                        role-specific dashboard and manage healthcare
+                        operations through one connected system.
+                    </p>
+
+                </div>
+
+
+                <div class="security-note">
+
+                    <span>🔒</span>
+
+                    <div>
+
+                        <strong>
+                            Secure role-based access
+                        </strong>
+
+                        <p>
+                            Your account will only provide access
+                            to the modules assigned to your role.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= SIGNUP FORM ================= -->
+
+            <section class="signup-card">
+
+                <div class="form-header">
+
+                    <div class="signup-icon">
+                        👤
+                    </div>
+
+                    <h2>
+                        Create Staff Account
+                    </h2>
+
+                    <p>
+                        Enter your details to register
+                    </p>
+
+                </div>
+
+
+                <form action="#" method="post">
+
+
+                    <!-- Name -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="first-name">
+                                First Name
+                            </label>
+
+                            <input type="text" id="first-name" name="first-name" placeholder="First name" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="last-name">
+                                Last Name
+                            </label>
+
+                            <input type="text" id="last-name" name="last-name" placeholder="Last name" required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Staff ID -->
+
+                    <div class="form-group">
+
+                        <label for="staff-id">
+                            Staff ID
+                        </label>
+
+                        <input type="text" id="staff-id" name="staff-id" placeholder="Enter staff ID" required>
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input type="email" id="email" name="email" placeholder="staff@example.com" required>
+
+                    </div>
+
+
+
+                    <!-- Role -->
+
+                    <div class="form-group">
+
+                        <label for="role">
+                            Staff Role
+                        </label>
+
+                        <select id="role" name="role" required>
+
+                            <option value="" disabled selected>
+                                Select your role
+                            </option>
+
+                            <option value="registration">
+                                Registration Staff
+                            </option>
+
+                            <option value="doctor">
+                                Doctor / Medical Officer
+                            </option>
+
+                            <option value="lab">
+                                Laboratory Staff
+                            </option>
+
+                            <option value="pharmacy">
+                                Pharmacist
+                            </option>
+
+                            <option value="admin">
+                                Administrator
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- Password -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <input type="password" id="password" name="password" placeholder="Create password"
+                                minlength="8" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="confirm-password">
+                                Confirm Password
+                            </label>
+
+                            <input type="password" id="confirm-password" name="confirm-password"
+                                placeholder="Confirm password" minlength="8" required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Terms -->
+
+                    <label class="terms">
+
+                        <input type="checkbox" name="terms" required>
+
+                        <span>
+                            I agree to the Svasthya
+                            <a href="#">terms and conditions</a>.
+                        </span>
+
+                    </label>
+
+
+
+                    <!-- Submit -->
+
+                    <button type="submit" class="signup-button">
+                        Create Account
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- Footer -->
+
+                <div class="form-footer">
+
+                    <p>
+                        Already have an account?
+                        <a href="login.html">
+                            Sign in
+                        </a>
+                    </p>
+
+                    <a href="index.html">
+                        ← Back to Svasthya
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

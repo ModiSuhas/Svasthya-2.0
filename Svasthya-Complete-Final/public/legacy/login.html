@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Svasthya | Staff Login</title>
+
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN PAGE ================= -->
+
+    <main class="login-page">
+
+        <div class="login-container">
+
+            <!-- Left Side -->
+            <section class="login-info">
+
+                <div class="brand">
+                    <h1>Svasthya</h1>
+                    <p>Integrated Health Management System</p>
+                </div>
+
+                <div class="welcome-content">
+
+                    <p class="label">STAFF PORTAL</p>
+
+                    <h2>
+                        Welcome back to
+                        <span>Svasthya.</span>
+                    </h2>
+
+                    <p>
+                        Access your role-based dashboard and manage
+                        patient information, consultations, laboratory
+                        reports, prescriptions and healthcare records
+                        from one connected platform.
+                    </p>
+
+                </div>
+
+                <div class="roles">
+
+                    <div class="role">
+                        <span>01</span>
+                        <p>Registration</p>
+                    </div>
+
+                    <div class="role">
+                        <span>02</span>
+                        <p>Doctor</p>
+                    </div>
+
+                    <div class="role">
+                        <span>03</span>
+                        <p>Laboratory</p>
+                    </div>
+
+                    <div class="role">
+                        <span>04</span>
+                        <p>Pharmacy</p>
+                    </div>
+
+                    <div class="role">
+                        <span>05</span>
+                        <p>Admin</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Right Side -->
+            <section class="login-card">
+
+                <div class="form-header">
+
+                    <div class="login-icon">
+                        🔐
+                    </div>
+
+                    <h2>Staff Login</h2>
+
+                    <p>
+                        Sign in to access your dashboard
+                    </p>
+
+                </div>
+
+
+                <form id="loginForm">
+
+                    <!-- Staff ID -->
+                    <div class="form-group">
+
+                        <label for="staff-id">
+                            Staff ID
+                        </label>
+
+                        <input type="text" id="staff-id" name="staff-id" placeholder="Enter your staff ID" required>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                    </div>
+
+
+                    <!-- Role -->
+                    <div class="form-group">
+
+                        <label for="role">
+                            Login as
+                        </label>
+
+                        <select id="role" name="role" required>
+
+                            <option value="" disabled selected>
+                                Select your role
+                            </option>
+
+                            <option value="registration">
+                                Registration Staff
+                            </option>
+
+                            <option value="doctor">
+                                Doctor / Medical Officer
+                            </option>
+
+                            <option value="lab">
+                                Laboratory Staff
+                            </option>
+
+                            <option value="pharmacy">
+                                Pharmacist
+                            </option>
+
+                            <option value="admin">
+                                Administrator
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Remember / Forgot -->
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input type="checkbox" name="remember">
+
+                            <span>Remember me</span>
+
+                        </label>
+
+                        <a href="#">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-button">
+                        Sign In
+                    </button>
+
+
+                    <!-- Inline error, shown if no role is selected -->
+                    <p id="loginError"
+                        style="display:none; color:#b23a26; font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">
+                        Please select a role to continue.
+                    </p>
+
+                </form>
+
+
+                <div class="form-footer">
+
+                    <p>
+                        Don't have a staff account?
+                        <a href="signup.html">Create an account</a>
+                    </p>
+
+                    <p class="authorized">
+                        Authorized staff only.
+                    </p>
+
+                    <a href="index.html">
+                        ← Back to Svasthya
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        // No backend exists yet, so this simulates authentication:
+        // it just routes to the correct portal's dashboard based on
+        // the role selected. Once a real login API exists, replace
+        // the redirect logic below with an actual auth call.
+        const ROLE_ROUTES = {
+            registration: "registration/registration.html",
+            doctor: "doctor/doctor.html",
+            lab: "lab/lab.html",
+            pharmacy: "pharmacy/pharmacy-dashboard.html",
+            admin: "admin/admin.html"
+        };
+
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const role = document.getElementById("role").value;
+            const errorMsg = document.getElementById("loginError");
+
+            if (!role || !ROLE_ROUTES[role]) {
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            errorMsg.style.display = "none";
+            window.location.href = ROLE_ROUTES[role];
+        });
+    </script>
+
+</body>
+
+</html>
