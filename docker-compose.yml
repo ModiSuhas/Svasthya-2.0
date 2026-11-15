@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: svasthya
+      POSTGRES_USER: clinic
+      POSTGRES_PASSWORD: clinic_dev_password
+    ports: ["127.0.0.1:5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinic -d svasthya"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://clinic:clinic_dev_password@db:5432/svasthya?schema=public
+      JWT_SECRET: ${JWT_SECRET:-local-course-project-secret-change-before-sharing-123456}
+      PORT: 4000
+      CLIENT_ORIGIN: http://localhost:4000
+      NODE_ENV: production
+    ports: ["4000:4000"]
+    depends_on:
+      db: { condition: service_healthy }
+volumes:
+  pgdata:

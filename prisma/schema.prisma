@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum Role {
+  ADMIN
+  REGISTRATION
+  DOCTOR
+  LAB
+  PHARMACY
+}
+enum VisitStatus {
+  WAITING
+  IN_CONSULTATION
+  LAB_PENDING
+  REVIEW
+  PHARMACY
+  COMPLETED
+}
+enum LabStatus {
+  REQUESTED
+  SAMPLE_COLLECTED
+  PROCESSING
+  VERIFIED
+}
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  passwordHash String
+  role Role
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  visits Visit[] @relation("VisitClinician")
+  labRequests LabRequest[] @relation("LabRequestedBy")
+  results LabResult[]
+  prescriptions Prescription[]
+  auditEvents AuditEvent[]
+  inventoryAdjustments InventoryAdjustment[]
+}
+model Patient {
+  id String @id @default(cuid())
+  patientNumber String @unique
+  firstName String
+  middleName String?
+  lastName String
+  dateOfBirth DateTime?
+  age Int?
+  gender String
+  phone String
+  idType String?
+  idNumber String?
+  state String @default("Gujarat")
+  district String @default("Ahmedabad")
+  taluka String?
+  village String?
+  address String?
+  heightCm Float?
+  weightKg Float?
+  bloodPressure String?
+  pulseBpm Int?
+  createdAt DateTime @default(now())
+  visits Visit[]
+  caseReports CaseReport[]
+}
+model Visit {
+  id String @id @default(cuid())
+  visitNumber String @unique
+  patientId String
+  patient Patient @relation(fields: [patientId], references: [id])
+  status VisitStatus @default(WAITING)
+  reason String?
+  symptoms String?
+  examination String?
+  diagnosis String?
+  notes String?
+  followUp String?
+  followUpDate DateTime?
+  clinicianId String?
+  clinician User? @relation("VisitClinician", fields: [clinicianId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  labRequests LabRequest[]
+  prescriptions Prescription[]
+}
+model LabRequest {
+  id String @id @default(cuid())
+  visitId String
+  visit Visit @relation(fields: [visitId], references: [id])
+  testName String
+  disease String?
+  sampleType String?
+  status LabStatus @default(REQUESTED)
+  requestedById String
+  requestedBy User @relation("LabRequestedBy", fields: [requestedById], references: [id])
+  createdAt DateTime @default(now())
+  result LabResult?
+}
+model LabResult {
+  id String @id @default(cuid())
+  requestId String @unique
+  request LabRequest @relation(fields: [requestId], references: [id])
+  value String
+  interpretation String?
+  verifiedAt DateTime @default(now())
+  verifiedById String
+  verifiedBy User @relation(fields: [verifiedById], references: [id])
+}
+model Medicine {
+  id String @id @default(cuid())
+  name String @unique
+  category String?
+  batches MedicineBatch[]
+  prescriptionItems PrescriptionItem[]
+}
+model MedicineBatch {
+  id String @id @default(cuid())
+  medicineId String
+  medicine Medicine @relation(fields: [medicineId], references: [id])
+  batchNumber String
+  expiryDate DateTime
+  quantity Int @default(0)
+  reorderLevel Int @default(10)
+  @@unique([medicineId, batchNumber])
+  adjustments InventoryAdjustment[]
+}
+model InventoryAdjustment {
+  id String @id @default(cuid())
+  batchId String
+  batch MedicineBatch @relation(fields: [batchId], references: [id])
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  quantityChange Int
+  reason String
+  createdAt DateTime @default(now())
+}
+model Prescription {
+  id String @id @default(cuid())
+  visitId String
+  visit Visit @relation(fields: [visitId], references: [id])
+  prescribedById String
+  prescribedBy User @relation(fields: [prescribedById], references: [id])
+  createdAt DateTime @default(now())
+  dispensedAt DateTime?
+  items PrescriptionItem[]
+}
+model PrescriptionItem {
+  id String @id @default(cuid())
+  prescriptionId String
+  prescription Prescription @relation(fields: [prescriptionId], references: [id])
+  medicineId String
+  medicine Medicine @relation(fields: [medicineId], references: [id])
+  dosage String
+  quantity Int
+  instructions String?
+}
+model CaseReport {
+  id String @id @default(cuid())
+  patientId String?
+  patient Patient? @relation(fields: [patientId], references: [id])
+  disease String
+  onsetDate DateTime?
+  reportDate DateTime @default(now())
+  provisionalDiagnosis String?
+  opdIpd String @default("OPD")
+  status String @default("SUSPECTED")
+  notes String?
+  createdById String
+}
+model AuditEvent {
+  id String @id @default(cuid())
+  userId String?
+  user User? @relation(fields: [userId], references: [id])
+  action String
+  entity String
+  entityId String?
+  createdAt DateTime @default(now())
+}
