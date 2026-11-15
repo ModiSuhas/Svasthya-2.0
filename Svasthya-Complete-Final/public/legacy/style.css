@@ -1,0 +1,872 @@
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #173b38;
+    line-height: 1.6;
+
+    background-image: linear-gradient(rgba(235, 249, 247, 0.88),
+            rgba(235, 249, 247, 0.88)),
+        url("bg-image.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER / NAVBAR
+===================================================== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid #d5e8e5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 15px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Logo */
+
+.logo h1 {
+    color: #066962;
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+.logo span {
+    color: #5b7774;
+    font-size: 0.8rem;
+}
+
+
+/* Navigation */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links a {
+    color: #24504c;
+    text-decoration: none;
+
+    padding: 8px 14px;
+    border-radius: 6px;
+
+    font-size: 0.9rem;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #e2f2f0;
+    color: #066962;
+}
+
+
+/* Staff Login */
+
+.nav-links .login-btn {
+    background-color: #066962;
+    color: white;
+    margin-left: 8px;
+}
+
+.nav-links .login-btn:hover {
+    background-color: #084d48;
+    color: white;
+}
+
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
+
+.hero {
+    min-height: 650px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 80px 30px;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 70px;
+
+    align-items: center;
+}
+
+
+/* Hero text */
+
+.tagline {
+    color: #066962;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+}
+
+.hero-text h2 {
+    color: #123e3a;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero-text h2 span {
+    color: #066962;
+}
+
+.hero-description {
+    max-width: 650px;
+
+    color: #526d69;
+    font-size: 1.05rem;
+
+    margin-bottom: 30px;
+}
+
+
+/* Hero buttons */
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.primary-btn {
+    background-color: #066962;
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: #084d48;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    color: #066962;
+    background-color: white;
+    border: 1px solid #8ebdb8;
+}
+
+.secondary-btn:hover {
+    background-color: #e4f3f1;
+}
+
+.roles {
+    margin-top: 25px;
+
+    color: #6b8581;
+    font-size: 0.85rem;
+}
+
+
+/* =====================================================
+   PATIENT CARD
+===================================================== */
+
+.patient-card {
+    background: rgba(255, 255, 255, 0.9);
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    border: 1px solid #d3e8e5;
+
+    box-shadow: 0 15px 40px rgba(6, 105, 98, 0.15);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #6a817e;
+    font-size: 0.85rem;
+
+    margin-bottom: 25px;
+}
+
+.status {
+    color: #218b64;
+    font-weight: bold;
+}
+
+.patient-icon {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #dff1ee;
+
+    border-radius: 50%;
+
+    font-size: 1.8rem;
+
+    margin-bottom: 20px;
+}
+
+.patient-card h3 {
+    color: #174944;
+    margin-bottom: 8px;
+}
+
+.patient-card>p {
+    color: #647c79;
+    font-size: 0.9rem;
+}
+
+.patient-id {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 25px;
+    padding-top: 15px;
+
+    border-top: 1px solid #dceae8;
+
+    font-size: 0.8rem;
+}
+
+.patient-id span {
+    color: #78908d;
+}
+
+.patient-id strong {
+    color: #066962;
+}
+
+
+/* =====================================================
+   GENERAL SECTION
+===================================================== */
+
+.section {
+    padding: 90px 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin-bottom: 50px;
+}
+
+.section-label {
+    color: #066962;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.section-heading h2 {
+    color: #123e3a;
+    font-size: 2.3rem;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.section-heading>p:last-child {
+    color: #647c79;
+}
+
+
+/* =====================================================
+   PATIENT FLOW
+===================================================== */
+
+.flow-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.flow-step {
+    background: rgba(255, 255, 255, 0.8);
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    border: 1px solid #d5e8e5;
+
+    transition: 0.3s ease;
+}
+
+.flow-step:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(6, 105, 98, 0.12);
+}
+
+.step-number {
+    display: inline-block;
+
+    color: #066962;
+    background-color: #dff1ee;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 0.75rem;
+    font-weight: bold;
+
+    margin-bottom: 15px;
+}
+
+.flow-step h3 {
+    color: #174944;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+
+.flow-step p {
+    color: #6a817e;
+    font-size: 0.9rem;
+}
+
+
+/* =====================================================
+   MODULES
+===================================================== */
+
+.modules-section {
+    max-width: 1250px;
+}
+
+.module-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.module-card {
+    background: rgba(255, 255, 255, 0.9);
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    border: 1px solid #d4e7e4;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+
+    transition: 0.3s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 15px 30px rgba(6, 105, 98, 0.12);
+}
+
+.module-number {
+    color: #066962;
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.module-role {
+    color: #7b9692;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+.module-card h3 {
+    color: #173f3b;
+    font-size: 1.3rem;
+
+    margin-bottom: 15px;
+}
+
+.module-card ul {
+    list-style: none;
+}
+
+.module-card li {
+    color: #647c79;
+    font-size: 0.9rem;
+
+    padding: 7px 0;
+
+    border-bottom: 1px solid #edf3f2;
+}
+
+.module-card li::before {
+    content: "✓";
+    color: #066962;
+    font-weight: bold;
+
+    margin-right: 8px;
+}
+
+
+/* Admin card */
+
+.admin-card {
+    grid-column: span 2;
+}
+
+.admin-card>p {
+    color: #647c79;
+    font-size: 0.9rem;
+
+    margin-bottom: 20px;
+}
+
+.disease-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.disease-stats div {
+    background-color: #edf7f5;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    text-align: center;
+}
+
+.disease-stats strong {
+    display: block;
+
+    color: #066962;
+    font-size: 1.4rem;
+}
+
+.disease-stats span {
+    color: #718985;
+    font-size: 0.75rem;
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats-section {
+    padding: 90px 30px;
+
+    background-color: rgba(8, 77, 72, 0.95);
+
+    color: white;
+}
+
+.stats-section .section-heading {
+    max-width: 1200px;
+    margin: auto auto 45px;
+}
+
+.stats-section .section-label {
+    color: #a9dfd8;
+}
+
+.stats-section h2 {
+    color: white;
+}
+
+.stats-grid {
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.stat-box {
+    text-align: center;
+
+    padding: 30px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.stat-box strong {
+    display: block;
+
+    font-size: 2.5rem;
+}
+
+.stat-box span {
+    color: #c8dfdc;
+    font-size: 0.9rem;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    background-color: #063c38;
+
+    color: white;
+
+    padding: 40px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.footer h3 {
+    color: white;
+}
+
+.footer p {
+    color: #b7d2cf;
+    font-size: 0.85rem;
+}
+
+.footer-flow {
+    color: #c9e0dd;
+    font-size: 0.85rem;
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .module-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-card {
+        grid-column: span 2;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        padding: 50px 20px;
+    }
+
+    .hero-text h2 {
+        font-size: 2.5rem;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+
+    .flow-container {
+        grid-template-columns: 1fr;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-card {
+        grid-column: span 1;
+    }
+
+    .disease-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+
+/* ================= MAP FOOTER ================= */
+
+.map-footer {
+    background: #063c38;
+    color: white;
+    margin-top: 80px;
+}
+
+
+/* Main Footer Content */
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 70px 30px;
+
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+
+    align-items: center;
+}
+
+
+/* Left Side Information */
+
+.map-info {
+    padding-right: 20px;
+}
+
+.footer-label {
+    display: inline-block;
+
+    color: #8fd3e8;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+.map-info h3 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.map-info>p {
+    color: #c8dce6;
+    line-height: 1.7;
+    font-size: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* Location Details */
+
+.location-details {
+    border-left: 3px solid #3fa7c4;
+    padding-left: 18px;
+
+    margin-bottom: 30px;
+}
+
+.location-details p {
+    display: flex;
+    flex-direction: column;
+
+    color: #c8dce6;
+    font-size: 14px;
+
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+
+.location-details strong {
+    color: white;
+    margin-bottom: 3px;
+}
+
+
+/* Google Maps Button */
+
+.map-btn {
+    display: inline-block;
+
+    background: #256b80;
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 22px;
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.map-btn:hover {
+    background: #3b8ca3;
+    transform: translateY(-2px);
+}
+
+
+/* Map */
+
+.map-container {
+    width: 100%;
+    height: 360px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border: 4px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+
+    display: block;
+}
+
+
+/* Bottom Footer */
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    padding: 20px 30px;
+
+    display: flex;
+    justify-content: space-between;
+
+    max-width: 1200px;
+    margin: auto;
+
+    color: #a9c9da;
+
+    font-size: 12px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 800px) {
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+
+        padding: 50px 20px;
+    }
+
+    .map-info {
+        padding-right: 0;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+
+        text-align: center;
+    }
+
+}

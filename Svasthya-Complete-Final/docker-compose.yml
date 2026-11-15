@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: svasthya
+      POSTGRES_USER: svasthya
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - svasthya_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U svasthya -d svasthya"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      DATABASE_URL: postgres://svasthya:${POSTGRES_PASSWORD}@db:5432/svasthya
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      UPLOAD_DIR: /data/uploads
+      SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Clinic Administrator}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      - svasthya_uploads:/data/uploads
+
+volumes:
+  svasthya_db:
+  svasthya_uploads:
