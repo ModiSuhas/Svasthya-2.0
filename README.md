@@ -34,20 +34,6 @@ React 19 and Vite (web interface), Node.js and Express (API), PostgreSQL (databa
 
 If another copy of Svasthya is already running, use the same Compose project name that started it so Docker reuses those containers. Otherwise stop the old copy before starting this one, because local ports 4000 and 5433 can only be used once.
 
-## Sample staff accounts
-
-All sample accounts use **`Demo@12345`**. Use these credentials to access the included sample staff accounts.
-
-| Portal | Email |
-| --- | --- |
-| Admin | `admin@svasthya.local` |
-| Registration | `registration@svasthya.local` |
-| Doctor / MO | `doctor@svasthya.local` |
-| Laboratory | `lab@svasthya.local` |
-| Pharmacy | `pharmacy@svasthya.local` |
-
-Each staff member can update their display name and change their own password in Account settings. A password change requires the current password and signs that user out. Admin manages staff role and email; Admin cannot reset another staff member’s password.
-
 ## Local development without Docker for the app
 
 Install Node.js 20 or newer and Docker Desktop for PostgreSQL. From the project folder:
